@@ -1,0 +1,513 @@
+{
+  "info": {
+    "_postman_id": "43ff497e-6d23-4eca-809b-a0a3d542faef",
+    "name": "BDMG - Fabíola Moraes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53575803",
+    "_collection_link": "https://go.postman.co/collection/53575803-43ff497e-6d23-4eca-809b-a0a3d542faef?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Authentication - Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"access_token\", data.access);\r",
+                  "pm.collectionVariables.set(\"refresh_token\", data.refresh);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"BDMG\",\r\n  \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{AUTH_URL}}/login",
+              "host": [
+                "{{AUTH_URL}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Authentication - Refresh",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"access_token\", data.access);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{refresh_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{AUTH_URL}}/refresh",
+              "host": [
+                "{{AUTH_URL}}"
+              ],
+              "path": [
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "Tasks - List",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"titulo\":\"Revisar performance da API de tarefas\",\r\n   \"descricao\":\"Analisar possíveis gargalos nas consultas da API e otimizar endpoints que apresentam maior tempo de resposta.\",\r\n   \"prioridade\":\"MEDIA\",\r\n   \"status\":\"PENDENTE\"\r\n}"
+            },
+            "url": {
+              "raw": "{{TASK_URL}}/tarefas",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "tarefas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tasks - Get By Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"titulo\":\"Revisar performance da API de tarefas\",\r\n   \"descricao\":\"Analisar possíveis gargalos nas consultas da API e otimizar endpoints que apresentam maior tempo de resposta.\",\r\n   \"prioridade\":\"ALTA\",\r\n   \"status\":\"PENDENTE\"\r\n}"
+            },
+            "url": {
+              "raw": "{{TASK_URL}}/tarefas/1",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "tarefas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tasks - Statistics",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"titulo\":\"Revisar performance da API de tarefas\",\r\n   \"descricao\":\"Analisar possíveis gargalos nas consultas da API e otimizar endpoints que apresentam maior tempo de resposta.\",\r\n   \"prioridade\":\"MEDIA\",\r\n   \"status\":\"PENDENTE\"\r\n}"
+            },
+            "url": {
+              "raw": "{{TASK_URL}}/tarefas/estatisticas",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "tarefas",
+                "estatisticas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tasks - Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"titulo\":\"Revisar performance da API de tarefas\",\r\n   \"descricao\":\"Analisar possíveis gargalos nas consultas da API e otimizar endpoints que apresentam maior tempo de resposta.\",\r\n   \"prioridade\":\"MEDIA\",\r\n   \"status\":\"PENDENTE\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{TASK_URL}}/tarefas",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "tarefas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tasks - Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"titulo\":\"Revisar performance da API de tarefas\",\r\n   \"descricao\":\"Analisar possíveis gargalos nas consultas da API e otimizar endpoints que apresentam maior tempo de resposta.\",\r\n   \"prioridade\":\"MEDIA\",\r\n   \"status\":\"CONCLUIDA\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{TASK_URL}}/tarefas/16",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "tarefas",
+                "16"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tasks - Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{TASK_URL}}/tarefas/16",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "tarefas",
+                "16"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Users - List",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{TASK_URL}}/usuarios",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users - Get By Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{TASK_URL}}/usuarios/3",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "usuarios",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users - Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"nome\":\"Administrador\",\r\n   \"login\":\"admin\",\r\n   \"senha\":\"123456\",\r\n   \"status\":1,\r\n   \"telefone\":\"32988396219\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{TASK_URL}}/usuarios",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users - Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"nome\":\"Fabíola Moraes\",\r\n   \"login\":\"FabiolaMoraes\",\r\n   \"senha\":\"123456\",\r\n   \"status\":1,\r\n   \"telefone\":\"32988396219\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{TASK_URL}}/usuarios/3",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "usuarios",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users - Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{TASK_URL}}/usuarios/3",
+              "host": [
+                "{{TASK_URL}}"
+              ],
+              "path": [
+                "usuarios",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "AUTH_URL",
+      "value": ""
+    },
+    {
+      "key": "TASK_URL",
+      "value": ""
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    }
+  ]
+}
